@@ -1,0 +1,20 @@
+.profile__edit-avatar {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  transition: opacity .5s linear;
+  background-image: url('../../../images/buttons/Vectorpen.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0,0,0, .8);
+  border-style: none;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.profile__edit-avatar:hover {
+  cursor: pointer;
+  opacity: 1;
+}

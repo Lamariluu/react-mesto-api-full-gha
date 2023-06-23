@@ -1,0 +1,14 @@
+.element__group {
+  display: flex;
+  margin: 0;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 16px 29px 22px;
+}
+
+@media screen and (max-width: 700px) {
+  .element__group {
+    padding-bottom: 26px;
+  }
+}
