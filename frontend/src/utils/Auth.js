@@ -1,4 +1,4 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = "https://api.lamarilu.nomoreparties.sbs"; // было https://auth.nomoreparties.co
 
 function checkResponse(res) {
   if (res.ok) {
@@ -30,11 +30,13 @@ export function loginUser(email, password) {
 };
 
 export function getToken(jwt) {
+  const token = localStorage.getItem('jwt');
+
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then(checkResponse);
