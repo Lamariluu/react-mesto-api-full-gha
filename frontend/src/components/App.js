@@ -50,20 +50,22 @@ function App() {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
-    if (isLoggedIn === false) {
-      return;
-    }
-    api.getUserInfo()
-      .then(profileData => setCurrentUser(profileData))
-      .catch(err => console.log(err))
-    api
-      .getInitialCards()
-      .then((cardData) => {
-        setCards(cardData.map((card) => card));
-      })
-      .catch(err => console.log(err))
-  },
-    [isLoggedIn]);
+    //const token = localStorage.getItem("jwt");
+    //if (token) {
+      if (isLoggedIn === false) {
+        return;
+      }
+      api.getUserInfo()
+        .then(profileData => setCurrentUser(profileData))
+        .catch(err => console.log(err))
+      api
+        .getInitialCards()
+        .then((cardData) => {
+          setCards(cardData.map((card) => card));
+        })
+        .catch(err => console.log(err))
+    //}
+  }, [isLoggedIn]);
 
   function onRegister(email, password) {
     auth
@@ -105,23 +107,48 @@ function App() {
 
   // ПОСЛЕ ПЕРЕЗАГРУЗКИ СТРАНИЦЫ, НЕ ТРЕБУЕТСЯ АВТОРИЗАЦИЯ
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      auth
-        .getToken(jwt)
-        .then((res) => {
-          console.log({ res })
-          if (res) {
-            setIsLoggedIn(true);
-            setEmailName(res.data.email);
-            navigate("/");
-          }
-        })
+    const token = localStorage.getItem("jwt"); //было const jwt = localStorage.getItem("jwt");
+    if (token) {
+      auth.getToken(token).then((res) => { //было auth.getToken(jwt).then((res) =>
+        //console.log({ res })
+        if (res) {
+          setIsLoggedIn(true);
+          //navigate("/");
+          setEmailName(res.email); //было setEmailName(res.data.email)
+        }
+      })
         .catch((err) => {
           console.error(err);
         });
     }
   }, []);
+
+  //useEffect(() => {
+  //  const token = localStorage.getItem("jwt"); //было const jwt = localStorage.getItem("jwt");
+  //  if (token) {
+  //    auth.getToken().then((res) => { //было auth.getToken(jwt).then((res) =>
+  //      //console.log({ res })
+  //      if (res) {
+  //        setIsLoggedIn(true);
+  //        navigate("/");
+  //        setEmailName(res.email);
+  //      }
+  //    })
+  //      .catch((err) => {
+  //        console.error(err);
+  //      });
+  //    api.getUserInfo()
+  //      .then(profileData => {
+  //        setCurrentUser(profileData))
+  //      .catch(err => console.log(err))
+  //    api
+  //      .getInitialCards()
+  //      .then((cardData) => {
+  //        setCards(cardData.map((card) => card));
+  //      })
+  //      .catch(err => console.log(err))
+  //}
+  //}, [navigate, isLoggedIn]);
 
   function handleInfoTooltip() {
     setInfoTooltip(true);
@@ -137,6 +164,7 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(user => user._id === currentUser._id);
+    //const isLiked = card.likes.some(id => id === currentUser._id);
     api
       .addLike(card._id, !isLiked)
       .then((newCard) => {

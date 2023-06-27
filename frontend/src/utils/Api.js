@@ -1,13 +1,18 @@
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl
-    this._headers = options.headers
+    //this._headers = options.headers
   }
 
   //загрузка карточек с сервера
   getInitialCards() {
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }, //было this.headers,
       method: "GET",
     })
       .then(this._checkResponse);
@@ -15,31 +20,49 @@ class Api {
 
   //получить информацию о пользователе
   getUserInfo() {
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }, //было this.headers,
       method: "GET",
     })
       .then(this._checkResponse);
   }
 
   //редактировать профиль
-  setUserInfo(data) {
+  setUserInfo({ name, about }) { // было setUserInfo(data)
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }, //было this.headers,
       method: 'PATCH',
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        name, // было name: data.name,
+        about, // было about: data.about
+    })
     })
       .then(this._checkResponse);
   }
 
   //добавить новую карточку
-  createItem(data) {
+  createItem({ name, link }) { // было createItem(data)
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }, //было this.headers,
       method: 'POST',
       body: JSON.stringify({
-        name: data.name,
-        link: data.link,
+        name, // было name: data.name
+        link, // было link: data.link
       })
     })
       .then(this._checkResponse);
@@ -47,8 +70,13 @@ class Api {
 
   //удалить карточку
   deleteItem(cardId) {
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }, // было this.headers
       method: 'DELETE',
     })
       .then(this._checkResponse);
@@ -56,19 +84,29 @@ class Api {
 
   //поставить лайк
   addLike(cardId, isLiked) {
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }, // было this.headers
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
     })
       .then(this._checkResponse);
   }
 
-  setUserAvatar(data) {
+  setUserAvatar({ avatar }) {  // было setUserAvatar(data)
+    const token = localStorage.getItem('jwt');
+
     return fetch(`${this._baseUrl}/users/me/avatar`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+    }, // было this.headers
       method: 'PATCH',
       body: JSON.stringify({
-        avatar: data.avatar,
+        avatar, // было avatar: data.avatar,
       })
     })
       .then(this._checkResponse);
@@ -84,11 +122,12 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
-  headers: {
-    authorization: '66152526-e3a2-499d-83aa-0c2a001d63c8',
-    'Content-Type': 'application/json'
-  }
+  //baseUrl: 'http://localhost:3001', // было https://mesto.nomoreparties.co/v1/cohort-60
+  baseUrl: 'https://api.lamarilu.nomoreparties.sbs'
+  //headers: {
+  //  authorization: '66152526-e3a2-499d-83aa-0c2a001d63c8',
+  //  'Content-Type': 'application/json'
+  //}
 });
 
 export default api;

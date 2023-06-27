@@ -1,4 +1,5 @@
-export const BASE_URL = "https://api.lamarilu.nomoreparties.sbs"; // было https://auth.nomoreparties.co
+//export const BASE_URL = "http://localhost:3001"; // было https://api.lamarilu.nomoreparties.sbs , еще раньше было https://auth.nomoreparties.co
+export const BASE_URL = 'https://api.lamarilu.nomoreparties.sbs';
 
 function checkResponse(res) {
   if (res.ok) {
@@ -26,17 +27,21 @@ export function loginUser(email, password) {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then(checkResponse);
+    .then(checkResponse)
+    //.then((data) => {
+    //  localStorage.setItem('jwt', data.token)
+    //  return data;
+    //})
 };
 
-export function getToken(jwt) {
+export function getToken() {
   const token = localStorage.getItem('jwt');
 
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`, // вместо token был jwt
     },
   })
     .then(checkResponse);
