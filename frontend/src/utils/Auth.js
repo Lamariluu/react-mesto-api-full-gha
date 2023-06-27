@@ -27,16 +27,11 @@ export function loginUser(email, password) {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then(checkResponse)
-    //.then((data) => {
-    //  localStorage.setItem('jwt', data.token)
-    //  return data;
-    //})
+    .then(checkResponse);
 };
 
 export function getToken() {
   const token = localStorage.getItem('jwt');
-
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
