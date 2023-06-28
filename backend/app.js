@@ -9,7 +9,7 @@ const { handleErrors } = require('./middlewares/handleErrors');
 const app = express();
 const {
   MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb',
-  PORT = 3001, //было 3000
+  PORT = 3001,
 } = process.env;
 
 app.use(express.json());
@@ -21,13 +21,15 @@ app.use(handleErrors);
 mongoose
   .connect(MONGO_URL)
   .then(() => {
+    // eslint-disable-next-line no-console
     console.log('Connected to MongoDB');
   })
   .catch((err) => {
+    // eslint-disable-next-line no-console
     console.log(err);
   });
 
 app.listen(PORT, (err) => {
-  // eslint-disable-next-line no-unused-expressions
+  // eslint-disable-next-line no-unused-expressions, no-console
   err ? console.log(err) : console.log(`App listening on ${PORT}`);
 });

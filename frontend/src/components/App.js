@@ -11,7 +11,6 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
-import ConfirmDeletePopup from './ConfirmDeletePopup';
 import * as auth from '../utils/Auth';
 import Register from './Register';
 import Login from './Login';
@@ -32,8 +31,6 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectCardDelete, setSelectCardDelete] = useState({});
-  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [emailName, setEmailName] = useState(null);
   const [popupImage, setPopupImage] = useState("");
@@ -162,9 +159,20 @@ function App() {
     setInfoTooltip(false);
   };
 
+  //const handleCardLike = (card) => {
+  //  const isLiked = card.likes.some(user => user._id === currentUser._id);
+  //  api
+  //    .addLike(card._id, !isLiked)
+  //    .then((newCard) => {
+  //      setCards((state) => {
+  //        return state.map((item) => item._id === card._id ? newCard : item)
+  //      });
+  //    })
+  //    .catch(err => console.log(err))
+  //};
+
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(user => user._id === currentUser._id);
-    //const isLiked = card.likes.some(id => id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
     api
       .addLike(card._id, !isLiked)
       .then((newCard) => {

@@ -1,7 +1,7 @@
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl
-    //this._headers = options.headers
+    this._headers = options.headers
   }
 
   //загрузка карточек с сервера
@@ -12,7 +12,7 @@ class Api {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-    }, //было this.headers,
+      }, //было this.headers,
       method: "GET",
     })
       .then(this._checkResponse);
@@ -26,7 +26,7 @@ class Api {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-    }, //было this.headers,
+      }, //было this.headers,
       method: "GET",
     })
       .then(this._checkResponse);
@@ -40,12 +40,12 @@ class Api {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-    }, //было this.headers,
+      }, //было this.headers,
       method: 'PATCH',
       body: JSON.stringify({
         name, // было name: data.name,
         about, // было about: data.about
-    })
+      })
     })
       .then(this._checkResponse);
   }
@@ -90,7 +90,7 @@ class Api {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-    }, // было this.headers
+      }, // было this.headers
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
     })
       .then(this._checkResponse);
@@ -103,7 +103,7 @@ class Api {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-    }, // было this.headers
+      }, // было this.headers
       method: 'PATCH',
       body: JSON.stringify({
         avatar, // было avatar: data.avatar,
@@ -123,11 +123,11 @@ class Api {
 
 const api = new Api({
   //baseUrl: 'http://localhost:3001', // было https://mesto.nomoreparties.co/v1/cohort-60
-  baseUrl: 'https://api.lamarilu.nomoreparties.sbs'
-  //headers: {
-  //  authorization: '66152526-e3a2-499d-83aa-0c2a001d63c8',
-  //  'Content-Type': 'application/json'
-  //}
+  baseUrl: 'https://api.lamarilu.nomoreparties.sbs',
+  headers: {
+    //authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    'Content-Type': 'application/json'
+  }
 });
 
 export default api;
