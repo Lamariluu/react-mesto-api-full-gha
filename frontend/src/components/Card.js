@@ -42,12 +42,12 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 					<p className="element__like-counter">{card.likes.length}</p>
 				</div>
 			</div>
-			<button
+			{isOwner && <button
 				className={cardTrashButtonClassName}
 				type="button"
 				aria-label="Корзина"
 				onClick={handleDeleteClick}
-			/>
+			/>}
 		</li>
 	);
 }

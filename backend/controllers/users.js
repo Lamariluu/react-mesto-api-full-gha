@@ -10,7 +10,6 @@ const User = require('../models/user');
 
 const {
   handleError,
-  HTTP_STATUS_OK,
   HTTP_STATUS_CREATED,
 } = require('../utils/constants');
 
@@ -24,10 +23,9 @@ const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        return next(new NotFoundError('Пользователь не найден'));
       }
-      res.status(HTTP_STATUS_OK)
-        .send(user);
+      return res.send({ data: user });
     })
     .catch((err) => handleError(err, next));
 };
@@ -83,9 +81,9 @@ const updateProfile = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        return next(new NotFoundError('Пользователь не найден'));
       }
-      res.status(HTTP_STATUS_OK).send({ data: user });
+      return res.send({ data: user });
     })
     .catch((err) => handleError(err, next));
 };
@@ -100,9 +98,9 @@ const updateAvatar = (req, res, next) => {
   )
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        return next(new NotFoundError('Пользователь не найден'));
       }
-      res.status(HTTP_STATUS_OK).send({ avatar });
+      return res.send({ avatar });
     })
     .catch((err) => handleError(err, next));
 };

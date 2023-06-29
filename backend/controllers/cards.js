@@ -24,6 +24,7 @@ const createCard = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   const userId = req.user._id;
   Card.findById(req.params.cardId)
+    .orFail()
     .then((card) => {
       const ownerId = card.owner.toString();
       if (ownerId !== userId) {

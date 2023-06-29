@@ -64,6 +64,17 @@ function App() {
     //}
   }, [isLoggedIn]);
 
+  //useEffect(() => {
+  //  if (isLoggedIn) {
+  //    Promise.all([api.getUserInfo(), api.getInitialCards()])
+  //      .then(([profileData, cardData]) => {
+  //        setCurrentUser(profileData);
+  //        setCards(cardData);
+  //      })
+  //      .catch((err) => console.log(err));
+  //  }
+  //}, [isLoggedIn]);
+
   function onRegister(email, password) {
     auth
       .registerUser(email, password)
