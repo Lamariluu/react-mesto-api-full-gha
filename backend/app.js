@@ -15,15 +15,13 @@ const { handleErrors } = require('./middlewares/handleErrors');
 const app = express();
 const {
   MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb',
-  PORT = 3000,
+  PORT = 3001,
 } = process.env;
 
 app.use(cors());
 app.use(express.json());
-app.use(router);
-app.use(auth);
-app.use(errors());
-app.use(handleErrors);
+// app.use(auth);
+
 app.use(requestLogger); // подключаем логгер запросов
 
 app.get('/crash-test', () => {
@@ -45,6 +43,9 @@ app.use(helmet());
 app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);
 app.use(auth);
+app.use(router);
+app.use(errors());
+app.use(handleErrors);
 
 mongoose
   .connect(MONGO_URL)
