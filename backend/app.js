@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
-const cors = require('cors');
 const { createUserValidation, loginValidation } = require('./middlewares/validation');
 const auth = require('./middlewares/auth');
 const router = require('./routes/router');
@@ -18,13 +18,13 @@ const {
   PORT = 3000,
 } = process.env;
 
+app.use(cors());
 app.use(express.json());
 app.use(router);
 app.use(auth);
 app.use(errors());
 app.use(handleErrors);
 app.use(requestLogger); // подключаем логгер запросов
-app.use(cors());
 
 app.get('/crash-test', () => {
   setTimeout(() => {
