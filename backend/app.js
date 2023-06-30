@@ -44,6 +44,7 @@ app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);
 app.use(auth);
 app.use(router);
+app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
 app.use(handleErrors);
 
@@ -62,6 +63,3 @@ app.listen(PORT, (err) => {
   // eslint-disable-next-line no-unused-expressions, no-console
   err ? console.log(err) : console.log(`App listening on ${PORT}`);
 });
-
-app.use(errorLogger); // подключаем логгер ошибок
-app.use(errors({ message: 'Ошибка валидации данных' })); // обработчик ошибок celebrate
