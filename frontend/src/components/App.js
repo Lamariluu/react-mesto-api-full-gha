@@ -64,17 +64,6 @@ function App() {
     //}
   }, [isLoggedIn]);
 
-  //useEffect(() => {
-  //  if (isLoggedIn) {
-  //    Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //      .then(([profileData, cardData]) => {
-  //        setCurrentUser(profileData);
-  //        setCards(cardData);
-  //      })
-  //      .catch((err) => console.log(err));
-  //  }
-  //}, [isLoggedIn]);
-
   function onRegister(email, password) {
     auth
       .registerUser(email, password)
@@ -208,7 +197,7 @@ function App() {
     api
       .setUserInfo(data)
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch(err => console.log(err))
@@ -220,7 +209,7 @@ function App() {
     api
       .setUserAvatar(changeAvatar)
       .then(data => {
-        setCurrentUser(data);
+        setCurrentUser({...currentUser, avatar: data.avatar});
         closeAllPopups();
       })
       .catch(err => console.log(err))
