@@ -53,7 +53,7 @@ function App() {
         return;
       }
       api.getUserInfo()
-        .then(profileData => setCurrentUser(profileData))
+        .then(profileData => setCurrentUser(profileData.data))
         .catch(err => console.log(err))
       api
         .getInitialCards()
